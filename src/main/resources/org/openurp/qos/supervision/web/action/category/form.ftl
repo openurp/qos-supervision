@@ -1,0 +1,16 @@
+[#ftl]
+[@b.head/]
+[@b.toolbar title="修改听课分类"]bar.addBack();[/@]
+  [@b.form action=b.rest.save(supervisionClazzCategory) theme="list"]
+    [@b.textfield name="supervisionClazzCategory.code" label="代码" value="${supervisionClazzCategory.code!}" required="true" maxlength="20"/]
+    [@b.textfield name="supervisionClazzCategory.name" label="名称" value="${supervisionClazzCategory.name!}" required="true" maxlength="40" style="width:300px"/]
+    [@b.textfield name="supervisionClazzCategory.enName" label="英文名称" value="${supervisionClazzCategory.enName!}" maxlength="100"/]
+    [@b.startend label="有效期限"
+      name="supervisionClazzCategory.beginOn,supervisionClazzCategory.endOn" required="true,false"
+      start=supervisionClazzCategory.beginOn end=supervisionClazzCategory.endOn format="date"/]
+    [@b.textfield name="supervisionClazzCategory.remark" label="备注" value="${supervisionClazzCategory.remark!}" maxlength="3"/]
+    [@b.formfoot]
+      [@b.reset/]&nbsp;&nbsp;[@b.submit value="action.submit"/]
+    [/@]
+  [/@]
+[@b.foot/]

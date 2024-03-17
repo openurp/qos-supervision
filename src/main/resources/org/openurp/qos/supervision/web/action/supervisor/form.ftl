@@ -1,0 +1,15 @@
+[#ftl]
+[@b.head/]
+[@b.toolbar title="修改督导名单"]bar.addBack();[/@]
+[@b.form action=b.rest.save(supervisor) theme="list"]
+  [@base.user name="supervisor.user.id" params="&user.category.id=1,3" label="教职工" value=supervisor.user! required="true"/]
+  [@b.select name="supervisor.level.id" label="类型" value=supervisor.level! required="true" items=levels/]
+  [@b.startend label="有效期"
+    name="supervisor.beginOn,supervisor.endOn" required="true,false"
+    start=supervisor.beginOn end=supervisor.endOn format="date"/]
+  [@b.textfield name="supervisor.remark" label="备注" value="${supervisor.remark!}" maxlength="3"/]
+  [@b.formfoot]
+    [@b.reset/]&nbsp;&nbsp;[@b.submit value="action.submit"/]
+  [/@]
+[/@]
+[@b.foot/]
