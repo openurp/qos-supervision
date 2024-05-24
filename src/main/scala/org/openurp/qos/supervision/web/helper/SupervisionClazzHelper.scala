@@ -18,6 +18,7 @@
 package org.openurp.qos.supervision.web.helper
 
 import org.beangle.commons.lang.Strings
+import org.beangle.commons.lang.time.WeekDay
 import org.beangle.data.dao.{EntityDao, OqlBuilder}
 import org.beangle.security.Securities
 import org.beangle.web.action.context.Params
@@ -37,6 +38,20 @@ class SupervisionClazzHelper(entityDao: EntityDao) {
     QueryHelper.populate(query)
     //query.where("size(clazz.schedule.activities)>0")
     //query.where("size(clazz.teachers)>0")
+    val weekDay = Params.getInt("clazzActivity.time.week")
+    val unit = Params.getInt("clazzActivity.beginUnit")
+    if (weekDay.nonEmpty || unit.nonEmpty) {
+      val activityQuery = new StringBuilder("exists( from clazz.schedule.activities as activity where 1=1 ")
+      if (weekDay.nonEmpty) {
+        val wd = WeekDay.of(weekDay.get)
+        activityQuery.append(" and to_char(activity.time.startOn,'D')='" + wd.index + "'")
+      }
+      if (unit.nonEmpty) {
+        activityQuery.append(" and activity.beginUnit=" + unit.get)
+      }
+      activityQuery.append(")")
+      query.where(activityQuery.toString())
+    }
     Params.getInt("category.id") foreach { categoryId =>
       val category = entityDao.get(classOf[SupervisionClazzCategory], categoryId)
       query.where("exists(from " + classOf[SupervisionClazz].getName + " at where  :category in elements(at.categories) and at.clazz=clazz)", category)

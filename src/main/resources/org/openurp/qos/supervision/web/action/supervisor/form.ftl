@@ -7,7 +7,7 @@
   [@b.startend label="有效期"
     name="supervisor.beginOn,supervisor.endOn" required="true,false"
     start=supervisor.beginOn end=supervisor.endOn format="date"/]
-  [@b.textfield name="supervisor.remark" label="备注" value="${supervisor.remark!}" maxlength="3"/]
+  [@b.textfield name="supervisor.remark" label="备注" value="${supervisor.remark!}" maxlength="30"/]
   [@b.formfoot]
     [@b.reset/]&nbsp;&nbsp;[@b.submit value="action.submit"/]
   [/@]

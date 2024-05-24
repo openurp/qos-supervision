@@ -28,7 +28,7 @@ class SupervisionServiceImpl extends SupervisionService {
 
   override def getSupervisors(semester: Semester, departs: Iterable[Department]): Seq[Supervisor] = {
     val query = OqlBuilder.from(classOf[Supervisor], "s")
-    query.where("s.user.department in(:departs)", departs)
+    if (null != departs) query.where("s.user.department in(:departs)", departs)
     query.where("s.beginOn <= :endOn and (s.endOn is null or :beginOn <= s.endOn)", semester.endOn, semester.beginOn)
     entityDao.search(query)
   }

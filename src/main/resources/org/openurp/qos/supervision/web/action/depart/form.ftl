@@ -15,7 +15,7 @@
       <td width='50%' id="f_assessOn">听课日期：
         <select name="schedule">
           [#list schedules as schedule]
-          <option value="${schedule.date}_${schedule.units}" [#if (schedule.date)?string('yyyy-MM-dd')=(supervision.assessOn)!"--"]selected="selected"[/#if]>${schedule.date} ${schedule.room}</option>
+          <option value="${schedule.date}_${schedule.units}" [#if (schedule.date)?string('yyyy-MM-dd')=(supervision.assessOn?string('yyyy-MM-dd'))!"--"]selected="selected"[/#if]>${schedule.date} ${schedule.room}</option>
           [/#list]
         </select>
         第

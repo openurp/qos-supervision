@@ -18,9 +18,10 @@
 package org.openurp.qos.supervision.web.action
 
 import org.beangle.commons.activation.MediaTypes
-import org.beangle.data.excel.schema.ExcelSchema
-import org.beangle.data.transfer.importer.ImportSetting
-import org.beangle.data.transfer.importer.listener.ForeignerListener
+import org.beangle.data.dao.OqlBuilder
+import org.beangle.doc.excel.schema.ExcelSchema
+import org.beangle.doc.transfer.importer.ImportSetting
+import org.beangle.doc.transfer.importer.listener.ForeignerListener
 import org.beangle.web.action.annotation.response
 import org.beangle.web.action.view.{Stream, View}
 import org.beangle.webmvc.support.action.{ExportSupport, ImportSupport, RestfulAction}
@@ -50,6 +51,12 @@ class SupervisorAction extends RestfulAction[Supervisor], ProjectSupport, Import
     }
     put("levels", getCodes(classOf[SupervisingLevel]))
     super.editSetting(supervisor)
+  }
+
+  override protected def getQueryBuilder: OqlBuilder[Supervisor] = {
+    val query = super.getQueryBuilder
+    queryByDepart(query, "supervisor.user.department")
+    query
   }
 
   @response

@@ -18,12 +18,25 @@
 package org.openurp.qos.supervision.web.action
 
 import org.beangle.data.dao.OqlBuilder
-import org.beangle.webmvc.support.action.RestfulAction
+import org.beangle.web.action.view.View
 import org.beangle.webmvc.support.helper.QueryHelper
+import org.openurp.base.model.{Project, Semester}
 import org.openurp.qos.supervision.model.*
-import org.openurp.starter.web.support.ProjectSupport
 
-class AdminAction extends RestfulAction[Supervision], ProjectSupport {
+class AdminAction extends DepartAction {
+  protected override def getLevels(): Seq[SupervisingLevel] = {
+    entityDao.getAll(classOf[SupervisingLevel])
+  }
+
+  override def inputSearch(): View = {
+    given project: Project = getProject
+
+    val semester = entityDao.get(classOf[Semester], getInt("supervision.clazz.semester.id", 0))
+    put("semester", semester)
+    val supervisors = supervisionService.getSupervisors(semester, null)
+    put("supervisors", supervisors)
+    forward()
+  }
 
   override protected def getQueryBuilder: OqlBuilder[Supervision] = {
     val alias = simpleEntityName

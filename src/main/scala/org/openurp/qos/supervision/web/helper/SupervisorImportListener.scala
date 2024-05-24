@@ -19,7 +19,7 @@ package org.openurp.qos.supervision.web.helper
 
 import org.beangle.commons.lang.Strings
 import org.beangle.data.dao.{EntityDao, OqlBuilder}
-import org.beangle.data.transfer.importer.{ImportListener, ImportResult}
+import org.beangle.doc.transfer.importer.{ImportListener, ImportResult}
 import org.openurp.base.model.{Project, User}
 import org.openurp.base.service.{SemesterService, UserCategories}
 import org.openurp.qos.supervision.model.Supervisor

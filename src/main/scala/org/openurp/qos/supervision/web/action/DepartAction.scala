@@ -20,7 +20,7 @@ package org.openurp.qos.supervision.web.action
 import org.beangle.commons.collection.Collections
 import org.beangle.commons.lang.Strings
 import org.beangle.data.dao.OqlBuilder
-import org.beangle.data.transfer.exporter.ExcelWriter
+import org.beangle.doc.transfer.exporter.ExcelWriter
 import org.beangle.web.action.view.View
 import org.beangle.web.servlet.util.RequestUtils
 import org.beangle.webmvc.support.action.RestfulAction
@@ -39,13 +39,20 @@ class DepartAction extends RestfulAction[Supervision], ProjectSupport {
 
   var supervisionService: SupervisionService = _
 
+  protected def getLevels(): Seq[SupervisingLevel] = {
+    val query = OqlBuilder.from(classOf[SupervisingLevel], "sl")
+    query.where("sl.name like '%院%'")
+    query.cacheable()
+    entityDao.search(query)
+  }
+
   override protected def indexSetting(): Unit = {
     super.indexSetting()
 
     given project: Project = getProject
 
     put("project", project)
-    put("levels", entityDao.getAll(classOf[SupervisingLevel]))
+    put("levels", getLevels())
     put("departs", getDeparts)
     put("semester", getSemester)
   }
@@ -54,6 +61,7 @@ class DepartAction extends RestfulAction[Supervision], ProjectSupport {
     given project: Project = getProject
 
     val query = super.getQueryBuilder
+    query.where("supervision.level in(:levels)", getLevels())
     query.where("supervision.assessor.department in(:departs)", getDeparts)
   }
 

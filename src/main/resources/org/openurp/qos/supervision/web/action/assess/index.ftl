@@ -37,7 +37,7 @@
         <input type="radio" name="supervising" id="supervising_me" value="me"><label  class="form-check-label" for="supervising_me">我听过</label>
         <input type="radio" name="supervising" id="supervising_other" value="other"><label  class="form-check-label" for="supervising_other">有人听过</label>
         <input type="radio" name="supervising" id="supervising_none" value="none"><label  class="form-check-label" for="supervising_none">没人听过</label>
-        <button class="btn btn-outline-primary btn-sm" style="margin-left: 120px;"><i class="fa fa-search fa-sm"></i>查询</button>
+        [@b.submit class="btn btn-outline-primary btn-sm" style="margin-left: 120px;" value='查询'][/@]
      </li>
     </ul>
 [/@]

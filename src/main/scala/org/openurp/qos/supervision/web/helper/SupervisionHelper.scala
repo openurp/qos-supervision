@@ -45,7 +45,7 @@ class SupervisionHelper(entityDao: EntityDao) {
         case None => supervision.courseUnit = Strings.substringBefore(schedule.units, "-").trim.toInt
         case Some(u) => supervision.courseUnit = u
 
-      Params.getInt("teacher.id") match
+      Params.getLong("teacher.id") match
         case None =>
           schedule.task.people foreach { p =>
             supervision.teacher = entityDao.get(classOf[Teacher], p.get("id").getOrElse("0").toString.toLong)
