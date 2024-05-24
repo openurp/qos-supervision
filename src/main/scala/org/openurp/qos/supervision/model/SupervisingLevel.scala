@@ -22,4 +22,6 @@ import org.openurp.code.CodeBean
 /** 督导层级
  */
 class SupervisingLevel extends CodeBean {
+  /** 仅仅听本学院课程 */
+  var schoolOnly: Boolean = _
 }

@@ -11,6 +11,7 @@
       [@b.select name="supervision.level.id" label="听课类型" items=levels empty="..." /]
       [@b.select name="supervision.clazz.teachDepart.id" label="开课院系" items=departs empty="..."/]
       [@b.date name="supervision.assessOn" label="听课日期"/]
+      [@b.textfield name="teacherName" label="授课老师"/]
       [@b.textfield name="supervision.assessor.name" label="听课人"/]
 
       <input type="hidden" name="orderBy" value="supervision.assessOn desc"/>

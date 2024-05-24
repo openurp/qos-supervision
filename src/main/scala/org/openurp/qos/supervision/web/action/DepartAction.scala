@@ -41,7 +41,7 @@ class DepartAction extends RestfulAction[Supervision], ProjectSupport {
 
   protected def getLevels(): Seq[SupervisingLevel] = {
     val query = OqlBuilder.from(classOf[SupervisingLevel], "sl")
-    query.where("sl.name like '%院%'")
+    query.where("sl.schoolOnly=true")
     query.cacheable()
     entityDao.search(query)
   }
@@ -61,6 +61,9 @@ class DepartAction extends RestfulAction[Supervision], ProjectSupport {
     given project: Project = getProject
 
     val query = super.getQueryBuilder
+    get("teacherName") foreach { teacherName =>
+      query.where("exists(from supervision.clazz.teachers as t where t.name like :teacherName)", "%" + teacherName + "%")
+    }
     query.where("supervision.level in(:levels)", getLevels())
     query.where("supervision.assessor.department in(:departs)", getDeparts)
   }
@@ -140,7 +143,7 @@ class DepartAction extends RestfulAction[Supervision], ProjectSupport {
   def exportData(): View = {
     val semester = entityDao.get(classOf[Semester], getInt("supervision.clazz.semester.id", 0))
     response.setContentType("application/vnd.ms-excel;charset=GBK")
-    RequestUtils.setContentDisposition(response, semester.schoolYear + "学年" + semester.name + "学期 领导听课结果")
+    RequestUtils.setContentDisposition(response, semester.schoolYear + "学年" + semester.name + "学期 领导听课结果.xlsx")
     val form = supervisionService.getSupervisionForm(semester)
     val query = getQueryBuilder
     query.limit(null)

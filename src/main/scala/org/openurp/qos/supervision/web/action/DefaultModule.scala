@@ -25,7 +25,7 @@ class DefaultModule extends BindModule {
   protected override def binding(): Unit = {
     bind(classOf[FormAction], classOf[FieldAction])
 
-    bind(classOf[SupervisorAction])
+    bind(classOf[SupervisorAction], classOf[DepartSupervisorAction])
     bind(classOf[AssessAction])
     bind(classOf[DepartAction])
     bind(classOf[AdminAction])

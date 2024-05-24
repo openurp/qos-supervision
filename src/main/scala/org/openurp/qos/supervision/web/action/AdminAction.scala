@@ -17,15 +17,40 @@
 
 package org.openurp.qos.supervision.web.action
 
+import org.beangle.commons.collection.Collections
 import org.beangle.data.dao.OqlBuilder
 import org.beangle.web.action.view.View
 import org.beangle.webmvc.support.helper.QueryHelper
 import org.openurp.base.model.{Project, Semester}
+import org.openurp.edu.schedule.service.LessonSchedule
 import org.openurp.qos.supervision.model.*
+
+import java.time.LocalTime
 
 class AdminAction extends DepartAction {
   protected override def getLevels(): Seq[SupervisingLevel] = {
     entityDao.getAll(classOf[SupervisingLevel])
+  }
+
+  override def editSetting(supervision: Supervision): Unit = {
+    val clazz = supervision.clazz
+    put("assessor", supervision.assessor)
+    put("clazz", supervision.clazz)
+
+    val beginAt = clazz.semester.beginOn.atTime(LocalTime.MIN)
+    val endAt = clazz.semester.endOn.atTime(LocalTime.MAX)
+    val units = Collections.newSet[Int]
+    clazz.schedule.activities foreach { activity =>
+      (activity.beginUnit.toInt to activity.endUnit.toInt) foreach { u =>
+        units.addOne(u)
+      }
+    }
+    put("units", units.toList.sorted)
+    val schedules = LessonSchedule.convert(clazz.schedule.activities, beginAt, endAt).sorted
+    put("schedules", schedules)
+    put("supervisionForm", supervisionService.getSupervisionForm(clazz.semester))
+
+    super.editSetting(supervision)
   }
 
   override def inputSearch(): View = {
@@ -43,6 +68,9 @@ class AdminAction extends DepartAction {
     val builder = OqlBuilder.from(entityClass, alias)
     populateConditions(builder)
     QueryHelper.sort(builder)
+    get("teacherName") foreach { teacherName =>
+      builder.where("exists(from supervision.clazz.teachers as t where t.name like :teacherName)", "%" + teacherName + "%")
+    }
     builder.tailOrder(alias + ".id")
     builder.limit(getPageLimit)
   }

@@ -3,6 +3,7 @@
     [@b.gridbar]
       bar.addItem("填写",action.method("inputSearch",null,null,"_blank"));
       bar.addItem("查看",action.single("info",null,null,"_blank"));
+      bar.addItem("修改",action.single("edit",null,null,"_blank"));
       bar.addItem("${b.text("action.delete")}",action.remove("确认删除?"));
       bar.addItem("导出",action.method("exportData",null,null,"_blank"));
     [/@]
