@@ -4,7 +4,7 @@
 <div class="search-container">
     <div class="search-panel">
     [@b.form name="searchForm" action="!search" target="supervisionList" title="ui.searchForm" theme="search"]
-      [@base.semester name="supervision.clazz.semester.id" value=semester label="学年学期" /]
+      [@base.semester name="supervision.clazz.semester.id" value=semester label="学年学期"  required="false"/]
       [@b.textfield name="supervision.clazz.crn" label="课程序号" maxlength="4000"/]
       [@b.textfield name="supervision.clazz.course.code" label="课程代码"/]
       [@b.textfield name="supervision.clazz.course.name" label="课程名称"/]
