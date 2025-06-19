@@ -20,5 +20,5 @@
     <div class="search-list">
       [@b.div id="supervisionList" href="!search?supervision.clazz.semester.id=${semester.id}&orderBy=supervision.assessOn desc"/]
     </div>
-  </div>
+</div>
 [@b.foot/]

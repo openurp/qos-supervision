@@ -17,12 +17,14 @@
 
 package org.openurp.qos.supervision.web.helper
 
+import org.beangle.commons.collection.Collections
 import org.beangle.commons.lang.Strings
 import org.beangle.commons.lang.time.WeekDay
 import org.beangle.data.dao.{EntityDao, OqlBuilder}
 import org.beangle.security.Securities
-import org.beangle.web.action.context.Params
+import org.beangle.webmvc.context.Params
 import org.beangle.webmvc.support.helper.QueryHelper
+import org.openurp.base.model.Department
 import org.openurp.edu.clazz.model.Clazz
 import org.openurp.qos.supervision.model.{Supervision, SupervisionClazz, SupervisionClazzCategory, Supervisor}
 
@@ -32,7 +34,10 @@ class SupervisionClazzHelper(entityDao: EntityDao) {
     val query = OqlBuilder.from(classOf[Clazz])
     supervisor foreach { su =>
       if (su.level.name.contains("院")) {
-        query.where("clazz.teachDepart=:depart", su.user.department)
+        val departs = Collections.newBuffer[Department]
+        departs.addOne(su.user.department)
+        departs.addAll(su.user.department.children)
+        query.where("clazz.teachDepart in(:departs)", departs)
       }
     }
     QueryHelper.populate(query)

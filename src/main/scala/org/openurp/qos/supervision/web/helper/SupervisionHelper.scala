@@ -20,7 +20,7 @@ package org.openurp.qos.supervision.web.helper
 import org.beangle.commons.collection.Collections
 import org.beangle.commons.lang.Strings
 import org.beangle.data.dao.{EntityDao, OqlBuilder}
-import org.beangle.web.action.context.{ActionContext, Params}
+import org.beangle.webmvc.context.{ActionContext, Params}
 import org.openurp.base.hr.model.Teacher
 import org.openurp.base.model.User
 import org.openurp.edu.clazz.model.Clazz

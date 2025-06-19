@@ -22,8 +22,8 @@ import org.beangle.data.dao.OqlBuilder
 import org.beangle.doc.excel.schema.ExcelSchema
 import org.beangle.doc.transfer.importer.ImportSetting
 import org.beangle.doc.transfer.importer.listener.ForeignerListener
-import org.beangle.web.action.annotation.response
-import org.beangle.web.action.view.{Stream, View}
+import org.beangle.webmvc.annotation.response
+import org.beangle.webmvc.view.{Stream, View}
 import org.beangle.webmvc.support.action.{ExportSupport, ImportSupport, RestfulAction}
 import org.openurp.base.model.Project
 import org.openurp.qos.supervision.model.{SupervisingLevel, Supervisor}
@@ -82,7 +82,7 @@ class DepartSupervisorAction extends RestfulAction[Supervisor], ProjectSupport, 
     sheet.add("备注", "supervisor.remark")
     val os = new ByteArrayOutputStream()
     schema.generate(os)
-    Stream(new ByteArrayInputStream(os.toByteArray), MediaTypes.ApplicationXlsx.toString, "督导模板.xlsx")
+    Stream(new ByteArrayInputStream(os.toByteArray), MediaTypes.ApplicationXlsx, "督导模板.xlsx")
   }
 
   override protected def configImport(setting: ImportSetting): Unit = {

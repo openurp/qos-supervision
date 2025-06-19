@@ -20,7 +20,7 @@ package org.openurp.qos.supervision.web.action
 import org.beangle.commons.collection.Collections
 import org.beangle.commons.lang.time.WeekDay
 import org.beangle.data.dao.OqlBuilder
-import org.beangle.web.action.view.View
+import org.beangle.webmvc.view.View
 import org.beangle.webmvc.support.helper.QueryHelper
 import org.openurp.base.hr.model.Teacher
 import org.openurp.base.model.{Project, Semester}

@@ -17,7 +17,7 @@
 
 package org.openurp.qos.supervision.web.action
 
-import org.beangle.cdi.bind.BindModule
+import org.beangle.commons.cdi.BindModule
 import org.openurp.qos.supervision.service.impl.SupervisionServiceImpl
 
 class DefaultModule extends BindModule {
