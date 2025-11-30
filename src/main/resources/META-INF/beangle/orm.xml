@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<orm>
-  <mapping class="org.openurp.qos.supervision.model.DefaultMapping" name="qos.supervisor"/>
-  <naming>
-    <profile package="org.openurp.qos.supervision.model" pluralize="true" schema="qos"/>
-  </naming>
-</orm>

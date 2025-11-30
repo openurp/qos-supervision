@@ -1,0 +1,26 @@
+<beangle xmlns="http://beangle.github.io/schema/framework"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://beangle.github.io/schema/framework http://beangle.github.io/schema/framework-1.0.xsd">
+
+  <ems app-name="qos-supervision-webapp"/>
+  <cdi>
+    <module class="org.openurp.starter.web.ProjectModule"/>
+    <module class="org.openurp.qos.supervision.web.action.DefaultModule"/>
+  </cdi>
+
+  <orm>
+    <mapping class="org.openurp.qos.supervision.model.DefaultMapping" name="qos.supervisor"/>
+    <naming>
+      <profile package="org.openurp.qos.supervision.model" pluralize="true" schema="qos"/>
+    </naming>
+  </orm>
+
+  <mvc>
+    <profile package="org.openurp.qos.supervision.web.action">
+      <url path="/" suffix="" style="seo"/>
+      <interceptor name="web.Interceptor.hibernate"/>
+      <interceptor name="web.Interceptor.security"/>
+    </profile>
+  </mvc>
+
+</beangle>
